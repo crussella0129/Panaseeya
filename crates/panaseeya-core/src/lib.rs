@@ -6,6 +6,7 @@
 pub mod catalog;
 pub mod error;
 pub mod model;
+pub mod sources;
 pub mod store;
 pub mod title;
 

@@ -48,3 +48,10 @@
 - **Completed:** 2026-11-22T20:58:05Z
 - **Files modified:** crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/store.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - **Commit:** `c03c0137acf3c8571c9b6e0dd1bd8c1ed553341f`
+
+## T-008 (sprint 0)
+- **Description:** Implement the parser for a legendary list --json document
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:59:42Z
+- **Files modified:** crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/sources/legendary.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/tests/fixtures/legendary-list.json, crates/panaseeya-core/tests/fixtures/README.md, crates/panaseeya-core/tests/import.rs
+- **Commit:** PENDING

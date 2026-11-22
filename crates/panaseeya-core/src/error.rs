@@ -33,6 +33,10 @@ pub enum Error {
     /// The catalog file holds something this program never writes.
     #[error("the catalog file is damaged: {detail}")]
     CorruptCatalog { detail: String },
+
+    /// A document offered as `legendary list --json` output could not be used.
+    #[error("not a usable Legendary game list: {detail}")]
+    LegendaryDocument { detail: String },
 }
 
 /// Shorthand for results carrying the core [`Error`].

@@ -1,0 +1,84 @@
+[
+  {
+    "app_name": "fixture-app-control",
+    "app_title": "Control",
+    "asset_infos": {
+      "Windows": {
+        "app_name": "fixture-app-control",
+        "asset_id": "fixture-asset-1",
+        "build_version": "1.0.0",
+        "catalog_item_id": "fixture-item-control",
+        "label_name": "Live-Windows",
+        "metadata": {},
+        "namespace": "fixture-namespace-control"
+      }
+    },
+    "base_urls": [],
+    "metadata": {
+      "id": "fixture-item-control",
+      "namespace": "fixture-namespace-control",
+      "title": "Control",
+      "categories": [{ "path": "games" }, { "path": "applications" }]
+    },
+    "dlcs": [
+      {
+        "app_name": "fixture-app-control-dlc-1",
+        "app_title": "Control: The Foundation",
+        "asset_infos": {},
+        "base_urls": [],
+        "metadata": {
+          "id": "fixture-item-control-dlc-1",
+          "namespace": "fixture-namespace-control",
+          "mainGameItem": { "id": "fixture-item-control" }
+        }
+      },
+      {
+        "app_name": "fixture-app-control-dlc-2",
+        "app_title": "Control: AWE",
+        "asset_infos": {},
+        "base_urls": [],
+        "metadata": {
+          "id": "fixture-item-control-dlc-2",
+          "namespace": "fixture-namespace-control",
+          "mainGameItem": { "id": "fixture-item-control" }
+        }
+      }
+    ]
+  },
+  {
+    "app_name": "fixture-app-hades",
+    "app_title": "Hades",
+    "asset_infos": {},
+    "base_urls": [],
+    "metadata": {
+      "id": "fixture-item-hades",
+      "namespace": "fixture-namespace-hades",
+      "title": "Hades"
+    },
+    "dlcs": []
+  },
+  {
+    "app_name": "fixture-app-hades-soundtrack",
+    "app_title": "Hades Original Soundtrack",
+    "asset_infos": {},
+    "base_urls": [],
+    "metadata": {
+      "id": "fixture-item-hades-soundtrack",
+      "namespace": "fixture-namespace-hades",
+      "mainGameItem": { "id": "fixture-item-hades" }
+    },
+    "dlcs": []
+  },
+  {
+    "app_name": "fixture-app-witcher3",
+    "app_title": "The Witcher 3: Wild Hunt",
+    "asset_infos": {},
+    "base_urls": [],
+    "metadata": {
+      "id": "fixture-item-witcher3",
+      "namespace": "fixture-namespace-witcher3",
+      "title": "The Witcher 3: Wild Hunt"
+    },
+    "dlcs": []
+  }
+]
