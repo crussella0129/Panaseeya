@@ -69,3 +69,10 @@
 - **Completed:** 2026-11-22T21:01:06Z
 - **Files modified:** crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/src/db_path.rs, crates/panaseeya-cli/Cargo.toml, crates/panaseeya-cli/tests/cli.rs, Cargo.lock
 - **Commit:** `7086a6aea3d1e1eb2c4ed76845ac3c83cfeefca0`
+
+## T-011 (sprint 0)
+- **Description:** Implement panaseeya import legendary for a saved document and for a live run
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T21:02:09Z
+- **Files modified:** crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/tests/cli.rs, README.md
+- **Commit:** PENDING
