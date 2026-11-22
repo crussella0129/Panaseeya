@@ -62,3 +62,10 @@
 - **Completed:** 2026-11-22T20:59:54Z
 - **Files modified:** crates/panaseeya-core/src/sources/legendary_runner.rs, crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/error.rs
 - **Commit:** `ecbc3243903c257b7d1f096b07569ca1d9c1fefb`
+
+## T-010 (sprint 0)
+- **Description:** Implement the panaseeya CLI with add, list, and database location
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T21:01:06Z
+- **Files modified:** crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/src/db_path.rs, crates/panaseeya-cli/Cargo.toml, crates/panaseeya-cli/tests/cli.rs, Cargo.lock
+- **Commit:** PENDING
