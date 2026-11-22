@@ -75,4 +75,4 @@
 - **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
 - **Completed:** 2026-11-22T21:02:09Z
 - **Files modified:** crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/tests/cli.rs, README.md
-- **Commit:** PENDING
+- **Commit:** `713c79eb783c1bbe9cedc7fb8549ef84c0e1a1b4`
