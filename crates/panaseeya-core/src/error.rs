@@ -21,6 +21,10 @@ pub enum Error {
         #[source]
         source: rusqlite::Error,
     },
+
+    /// A record was offered with a required text field left blank.
+    #[error("cannot record a game with a blank {field}")]
+    BlankField { field: &'static str },
 }
 
 /// Shorthand for results carrying the core [`Error`].

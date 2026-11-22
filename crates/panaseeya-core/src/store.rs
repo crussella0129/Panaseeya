@@ -49,6 +49,10 @@ impl Store {
     pub(crate) fn conn(&self) -> &Connection {
         &self.conn
     }
+
+    pub(crate) fn conn_mut(&mut self) -> &mut Connection {
+        &mut self.conn
+    }
 }
 
 fn user_version(conn: &Connection) -> Result<u32> {

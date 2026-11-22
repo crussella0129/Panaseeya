@@ -1,6 +1,5 @@
 # Agent Tasks (Persistent Backlog)
 
-- [ ] T-005 (sprint 0) [intent: INT-0001]: Implement recording ownerships with title grouping, validation, and an atomic batch — touches: crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs
 - [ ] T-006 (sprint 0) [intent: INT-0001]: Implement manual entries and parsing a medium from text — touches: crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs
 - [ ] T-007 (sprint 0) [intent: INT-0001]: Implement listing titles with their ownerships in a defined order — touches: crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-008 (sprint 0) [intent: INT-0001]: Implement the parser for a legendary list --json document — touches: crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/sources/legendary.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/tests/fixtures/legendary-list.json, crates/panaseeya-core/tests/fixtures/README.md, crates/panaseeya-core/tests/import.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
