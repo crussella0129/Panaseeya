@@ -47,4 +47,4 @@
 - **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
 - **Completed:** 2026-11-22T20:58:05Z
 - **Files modified:** crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/store.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
-- **Commit:** PENDING
+- **Commit:** `c03c0137acf3c8571c9b6e0dd1bd8c1ed553341f`
