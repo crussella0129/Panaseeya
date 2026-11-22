@@ -40,4 +40,4 @@
 - **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
 - **Completed:** 2026-11-22T20:57:20Z
 - **Files modified:** crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs
-- **Commit:** PENDING
+- **Commit:** `ae45fe4a06e042a44a1ae8049c8aef4aed21fafb`
