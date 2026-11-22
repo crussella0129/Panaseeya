@@ -20,3 +20,10 @@
 - **Completed:** 2026-11-22T20:54:07Z
 - **Files modified:** crates/panaseeya-core/src/title.rs, crates/panaseeya-core/src/lib.rs
 - **Commit:** `455d93d7685b574892da7b331035c80c943db1be`
+
+## T-004 (sprint 0)
+- **Description:** Implement the SQLite store and its ordered migration runner
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:55:51Z
+- **Files modified:** crates/panaseeya-core/src/store.rs, crates/panaseeya-core/src/migrations/0001_initial.sql, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
+- **Commit:** PENDING

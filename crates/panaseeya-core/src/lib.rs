@@ -3,6 +3,10 @@
 //! One local catalog of every game a person owns, regardless of where it came
 //! from. Modules are added here as the catalog grows.
 
+pub mod error;
+pub mod store;
 pub mod title;
 
+pub use error::{Error, Result};
+pub use store::Store;
 pub use title::normalize_title;
