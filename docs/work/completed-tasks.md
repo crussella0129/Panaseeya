@@ -13,3 +13,10 @@
 - **Completed:** 2026-11-22T20:53:42Z
 - **Files modified:** .github/workflows/sprint-loops-ci.yml, .github/dependabot.yml
 - **Commit:** `99581c14fb42b72766a4a6f2d2964ce98da198d1`
+
+## T-003 (sprint 0)
+- **Description:** Implement title normalisation that decides when two titles are the same game
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:54:07Z
+- **Files modified:** crates/panaseeya-core/src/title.rs, crates/panaseeya-core/src/lib.rs
+- **Commit:** PENDING
