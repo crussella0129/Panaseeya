@@ -2,7 +2,7 @@
 
 <!-- sprint-loop-intent-v2 -->
 - **Intent ID:** INT-0001
-- **State:** planned
+- **State:** active
 - **Work evidence:** [Sprint 0 build plan, T-001 to T-011](../sprints/s0/sprint-plans/build-plan.md)
 - **Completion evidence:** none
 - **Code evidence:** none
@@ -134,3 +134,4 @@ read against that shape.
   earlier wording ("differ only by case, punctuation, trademark symbols, or
   surrounding whitespace") promised more than exact matching delivers for
   punctuation inside a word; the criterion now states the word-sequence rule.
+- 2026-11-22: `planned` → `active`; Sprint 0 build began with T-001.
