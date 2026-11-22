@@ -1,6 +1,5 @@
 # Agent Tasks (Persistent Backlog)
 
-- [ ] T-002 (sprint 0) [intent: INT-0001]: Add a CI workflow that runs the project checks and a Cargo entry for dependency updates — touches: .github/workflows/sprint-loops-ci.yml, .github/dependabot.yml
 - [ ] T-003 (sprint 0) [intent: INT-0001]: Implement title normalisation that decides when two titles are the same game — touches: crates/panaseeya-core/src/title.rs, crates/panaseeya-core/src/lib.rs
 - [ ] T-004 (sprint 0) [intent: INT-0001]: Implement the SQLite store and its ordered migration runner — touches: crates/panaseeya-core/src/store.rs, crates/panaseeya-core/src/migrations/0001_initial.sql, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-005 (sprint 0) [intent: INT-0001]: Implement recording ownerships with title grouping, validation, and an atomic batch — touches: crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs

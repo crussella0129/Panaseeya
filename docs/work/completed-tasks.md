@@ -6,3 +6,10 @@
 - **Completed:** 2026-11-22T20:53:29Z
 - **Files modified:** Cargo.toml, Cargo.lock, crates/panaseeya-core/Cargo.toml, crates/panaseeya-core/src/lib.rs, crates/panaseeya-cli/Cargo.toml, crates/panaseeya-cli/src/main.rs
 - **Commit:** `5fa9525fffa4ac02b4e79d83a31887d0e388404e`
+
+## T-002 (sprint 0)
+- **Description:** Add a CI workflow that runs the project checks and a Cargo entry for dependency updates
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:53:42Z
+- **Files modified:** .github/workflows/sprint-loops-ci.yml, .github/dependabot.yml
+- **Commit:** PENDING
