@@ -34,3 +34,10 @@
 - **Completed:** 2026-11-22T20:56:47Z
 - **Files modified:** crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/src/store.rs
 - **Commit:** `b54005dc6c721a45c47b818af57ff64988d3520d`
+
+## T-006 (sprint 0)
+- **Description:** Implement manual entries and parsing a medium from text
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:57:20Z
+- **Files modified:** crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/src/error.rs
+- **Commit:** PENDING

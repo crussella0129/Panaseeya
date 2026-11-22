@@ -1,5 +1,7 @@
 //! The catalog's vocabulary: what an ownership record is made of.
 
+use crate::error::Error;
+
 /// The form in which a copy of a game is owned.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Medium {
@@ -15,6 +17,28 @@ impl Medium {
             Medium::Digital => "digital",
             Medium::Physical => "physical",
             Medium::Rom => "rom",
+        }
+    }
+}
+
+impl std::fmt::Display for Medium {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+
+impl std::str::FromStr for Medium {
+    type Err = Error;
+
+    /// Parses exactly `digital`, `physical`, or `rom`.
+    fn from_str(text: &str) -> Result<Self, Self::Err> {
+        match text {
+            "digital" => Ok(Medium::Digital),
+            "physical" => Ok(Medium::Physical),
+            "rom" => Ok(Medium::Rom),
+            other => Err(Error::InvalidMedium {
+                value: other.to_owned(),
+            }),
         }
     }
 }
@@ -56,4 +80,21 @@ pub struct NewOwnership {
     pub medium: Medium,
     /// The game's title as the source spells it.
     pub title: String,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn medium_parse_rejects_unknown_value() {
+        let err = "cartridge".parse::<Medium>().unwrap_err();
+
+        assert!(matches!(&err, Error::InvalidMedium { value } if value == "cartridge"));
+        let message = err.to_string();
+        for accepted in ["physical", "digital", "rom"] {
+            assert!(message.contains(accepted), "{message}");
+            assert_eq!(accepted.parse::<Medium>().unwrap().as_str(), accepted);
+        }
+    }
 }

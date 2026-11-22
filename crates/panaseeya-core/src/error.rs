@@ -25,6 +25,10 @@ pub enum Error {
     /// A record was offered with a required text field left blank.
     #[error("cannot record a game with a blank {field}")]
     BlankField { field: &'static str },
+
+    /// A medium was given that is not one of the three the catalog knows.
+    #[error("unknown medium {value:?}; use one of: physical, digital, rom")]
+    InvalidMedium { value: String },
 }
 
 /// Shorthand for results carrying the core [`Error`].

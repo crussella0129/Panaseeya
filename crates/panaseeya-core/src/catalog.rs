@@ -5,7 +5,7 @@ use std::path::Path;
 use rusqlite::{OptionalExtension, Transaction, params};
 
 use crate::error::{Error, Result};
-use crate::model::NewOwnership;
+use crate::model::{Medium, NewOwnership, Origin};
 use crate::store::Store;
 use crate::title::normalize_title;
 
@@ -49,6 +49,22 @@ impl Catalog {
         }
         tx.commit()?;
         Ok(())
+    }
+
+    /// Records a copy the person entered by hand: a title, a source label of
+    /// their choosing (a shelf, a site, a package manager), and a medium.
+    ///
+    /// A manual entry is identified by its label, its normalised title, and its
+    /// medium. Adding the same one again changes nothing; the same game under
+    /// the same label with a different medium is a second copy.
+    pub fn add_manual(&mut self, title: &str, label: &str, medium: Medium) -> Result<()> {
+        self.record(&NewOwnership {
+            origin: Origin::Manual,
+            source: label.trim().to_owned(),
+            source_id: format!("{}:{}", normalize_title(title), medium.as_str()),
+            medium,
+            title: title.to_owned(),
+        })
     }
 
     #[cfg(test)]
@@ -161,7 +177,79 @@ pub(crate) mod test_support {
 mod tests {
     use super::test_support::{ownerships, titles};
     use super::*;
-    use crate::model::{Medium, Origin};
+
+    fn row(title: &str, origin: &str, source: &str, source_id: &str, medium: &str) -> OwnershipRow {
+        (
+            title.to_owned(),
+            origin.to_owned(),
+            source.to_owned(),
+            source_id.to_owned(),
+            medium.to_owned(),
+        )
+    }
+
+    type OwnershipRow = (String, String, String, String, String);
+
+    #[test]
+    fn manual_entry_records_label_medium_and_origin() {
+        let mut catalog = Catalog::open_in_memory().unwrap();
+
+        catalog
+            .add_manual("Chrono Trigger", "shelf", Medium::Rom)
+            .unwrap();
+
+        assert_eq!(
+            ownerships(&catalog),
+            [row(
+                "Chrono Trigger",
+                "manual",
+                "shelf",
+                "chrono trigger:rom",
+                "rom"
+            )]
+        );
+    }
+
+    #[test]
+    fn manual_entry_repeat_is_noop_and_new_medium_adds() {
+        let mut catalog = Catalog::open_in_memory().unwrap();
+        catalog
+            .add_manual("Chrono Trigger", "shelf", Medium::Rom)
+            .unwrap();
+        let after_first = ownerships(&catalog);
+
+        catalog
+            .add_manual("chrono trigger", "shelf", Medium::Rom)
+            .unwrap();
+        assert_eq!(ownerships(&catalog), after_first);
+
+        catalog
+            .add_manual("Chrono Trigger", "shelf", Medium::Physical)
+            .unwrap();
+        let recorded = ownerships(&catalog);
+        assert_eq!(recorded.len(), 2);
+        assert_eq!(recorded[1].4, "physical");
+        assert_eq!(titles(&catalog).len(), 1);
+    }
+
+    #[test]
+    fn manual_label_matching_store_name_stays_distinct() {
+        let mut catalog = Catalog::open_in_memory().unwrap();
+
+        catalog.record(&store_copy("app1", "Hades")).unwrap();
+        catalog
+            .add_manual("Hades", "epic", Medium::Digital)
+            .unwrap();
+
+        assert_eq!(titles(&catalog).len(), 1);
+        assert_eq!(
+            ownerships(&catalog),
+            [
+                row("Hades", "store", "epic", "app1", "digital"),
+                row("Hades", "manual", "epic", "hades:digital", "digital"),
+            ]
+        );
+    }
 
     fn store_copy(source_id: &str, title: &str) -> NewOwnership {
         NewOwnership {
