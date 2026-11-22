@@ -1,2 +1,7 @@
 # Panaseeya
-Catalog your games, in real-ish time, from Steam, GOG, Epic, Amazon, as well as your private collection.
+An aesthetic and no-brainer place to catalog and access your games, in real-ish time, from Steam, GOG, Epic, Amazon, as well as your private collection.
+
+The key strategy is going to be to build a database managment/data lake/media procurement software, like Heroic, from the outputs of the CLI tools for Steam (SteamCMD), Gog (most commonly gogdl and gog-cli), Epic (most commonly with Legendary) and Amazon (with Nile). The 'flow' of this app is that the app calls game library lists from the CLI tools for your logged in accounts (and you can log in via the tool) with cover images and such. The game identifies identical titles and groups them together as available on multiple platforms (as on heroic). If a game exists on a package manager or a site, like dwarf fortress, I want that accounted for, and I want to also be albe to log both physical and digital copies of games that you own that are not on exchanges, or could be Roms.
+
+Basically I want this to be like heroic, but with a lot more data. I want it to be a nicely presented app with images of games and coverart and such, as well as the ability to easily access DLC and mods in one place (so perhaps a nexus mods connection as well). It would be cool to see total playtime on identical titles for example to see how much you really play (which would be extra cool if consoles had APIs or CLI tools, so you could know the true total, but i don't know if they do). 
+
