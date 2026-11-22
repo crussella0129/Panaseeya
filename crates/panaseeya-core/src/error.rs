@@ -37,6 +37,35 @@ pub enum Error {
     /// A document offered as `legendary list --json` output could not be used.
     #[error("not a usable Legendary game list: {detail}")]
     LegendaryDocument { detail: String },
+
+    /// A program Panaseeya relies on is not installed or not on the search path.
+    #[error("could not find the program `{program}`; install it or check that it is on your PATH")]
+    ToolNotFound { program: String },
+
+    /// A program exists but could not be started.
+    #[error("could not start `{program}`: {source}")]
+    ToolNotStarted {
+        program: String,
+        #[source]
+        source: std::io::Error,
+    },
+
+    /// A program ran and reported failure.
+    #[error("`{program}` failed ({}): {stderr}", exit_text(*.status))]
+    ToolFailed {
+        program: String,
+        /// The exit code, or `None` if the program was stopped by a signal.
+        status: Option<i32>,
+        /// What the program wrote to standard error.
+        stderr: String,
+    },
+}
+
+fn exit_text(status: Option<i32>) -> String {
+    match status {
+        Some(code) => format!("exit status {code}"),
+        None => "stopped by a signal".to_owned(),
+    }
 }
 
 /// Shorthand for results carrying the core [`Error`].

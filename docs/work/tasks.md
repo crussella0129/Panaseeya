@@ -1,5 +1,4 @@
 # Agent Tasks (Persistent Backlog)
 
-- [ ] T-009 (sprint 0) [intent: INT-0001]: Implement the runner that executes Legendary and returns its output — touches: crates/panaseeya-core/src/sources/legendary_runner.rs, crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-010 (sprint 0) [intent: INT-0001]: Implement the panaseeya CLI with add, list, and database location — touches: crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/src/db_path.rs, crates/panaseeya-cli/Cargo.toml, crates/panaseeya-cli/tests/cli.rs, Cargo.lock
 - [ ] T-011 (sprint 0) [intent: INT-0001]: Implement panaseeya import legendary for a saved document and for a live run — touches: crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/tests/cli.rs, README.md

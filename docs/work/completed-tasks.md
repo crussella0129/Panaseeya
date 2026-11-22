@@ -55,3 +55,10 @@
 - **Completed:** 2026-11-22T20:59:42Z
 - **Files modified:** crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/sources/legendary.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/tests/fixtures/legendary-list.json, crates/panaseeya-core/tests/fixtures/README.md, crates/panaseeya-core/tests/import.rs
 - **Commit:** `70c5b313304f5ddca7d9c592ea195d65c2bfafb6`
+
+## T-009 (sprint 0)
+- **Description:** Implement the runner that executes Legendary and returns its output
+- **Intent:** [INT-0001](../intents/INT-0001-unified-catalog-core.md)
+- **Completed:** 2026-11-22T20:59:54Z
+- **Files modified:** crates/panaseeya-core/src/sources/legendary_runner.rs, crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/error.rs
+- **Commit:** PENDING
