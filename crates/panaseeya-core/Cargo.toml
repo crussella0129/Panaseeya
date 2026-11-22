@@ -1,0 +1,9 @@
+[package]
+name = "panaseeya-core"
+description = "Catalog core for Panaseeya: one local library of every game you own."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
