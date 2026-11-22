@@ -1,3 +1,5 @@
+Finalized - DO NOT EDIT
+
 # Sprint 0 Test Plan
 
 Clause identifiers (`E-NNN.k`) are defined in the build plan.
