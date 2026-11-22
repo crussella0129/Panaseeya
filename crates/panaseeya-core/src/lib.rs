@@ -11,6 +11,6 @@ pub mod title;
 
 pub use catalog::Catalog;
 pub use error::{Error, Result};
-pub use model::{Medium, NewOwnership, Origin};
+pub use model::{Medium, NewOwnership, Origin, OwnershipEntry, TitleEntry};
 pub use store::Store;
 pub use title::normalize_title;

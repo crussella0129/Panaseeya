@@ -1,6 +1,5 @@
 # Agent Tasks (Persistent Backlog)
 
-- [ ] T-007 (sprint 0) [intent: INT-0001]: Implement listing titles with their ownerships in a defined order — touches: crates/panaseeya-core/src/catalog.rs, crates/panaseeya-core/src/model.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-008 (sprint 0) [intent: INT-0001]: Implement the parser for a legendary list --json document — touches: crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/sources/legendary.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/src/lib.rs, crates/panaseeya-core/tests/fixtures/legendary-list.json, crates/panaseeya-core/tests/fixtures/README.md, crates/panaseeya-core/tests/import.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-009 (sprint 0) [intent: INT-0001]: Implement the runner that executes Legendary and returns its output — touches: crates/panaseeya-core/src/sources/legendary_runner.rs, crates/panaseeya-core/src/sources/mod.rs, crates/panaseeya-core/src/error.rs, crates/panaseeya-core/Cargo.toml, Cargo.lock
 - [ ] T-010 (sprint 0) [intent: INT-0001]: Implement the panaseeya CLI with add, list, and database location — touches: crates/panaseeya-cli/src/main.rs, crates/panaseeya-cli/src/db_path.rs, crates/panaseeya-cli/Cargo.toml, crates/panaseeya-cli/tests/cli.rs, Cargo.lock

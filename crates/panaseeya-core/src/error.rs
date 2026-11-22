@@ -29,6 +29,10 @@ pub enum Error {
     /// A medium was given that is not one of the three the catalog knows.
     #[error("unknown medium {value:?}; use one of: physical, digital, rom")]
     InvalidMedium { value: String },
+
+    /// The catalog file holds something this program never writes.
+    #[error("the catalog file is damaged: {detail}")]
+    CorruptCatalog { detail: String },
 }
 
 /// Shorthand for results carrying the core [`Error`].

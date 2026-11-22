@@ -1,9 +1,12 @@
 //! The catalog's vocabulary: what an ownership record is made of.
 
+use serde::Serialize;
+
 use crate::error::Error;
 
 /// The form in which a copy of a game is owned.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Medium {
     Digital,
     Physical,
@@ -47,7 +50,8 @@ impl std::str::FromStr for Medium {
 ///
 /// Keeping this apart from the source name means a hand-entered record whose
 /// label happens to be `epic` never collides with records imported from Epic.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Origin {
     /// Imported from a store's own tooling.
     Store,
@@ -80,6 +84,26 @@ pub struct NewOwnership {
     pub medium: Medium,
     /// The game's title as the source spells it.
     pub title: String,
+}
+
+/// One title in a listing, with every copy the person owns of it.
+///
+/// Serialised, this is the listing contract other programs read:
+/// `{"title": ..., "ownerships": [{"source": ..., "medium": ..., "origin": ...}]}`.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct TitleEntry {
+    /// The title's display name.
+    pub title: String,
+    /// Ordered by source, then medium, then origin.
+    pub ownerships: Vec<OwnershipEntry>,
+}
+
+/// One owned copy as it appears in a listing.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+pub struct OwnershipEntry {
+    pub source: String,
+    pub medium: Medium,
+    pub origin: Origin,
 }
 
 #[cfg(test)]

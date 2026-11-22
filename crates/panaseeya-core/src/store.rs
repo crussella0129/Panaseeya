@@ -45,7 +45,6 @@ impl Store {
         user_version(&self.conn)
     }
 
-    #[cfg(test)]
     pub(crate) fn conn(&self) -> &Connection {
         &self.conn
     }

@@ -5,7 +5,7 @@ use std::path::Path;
 use rusqlite::{OptionalExtension, Transaction, params};
 
 use crate::error::{Error, Result};
-use crate::model::{Medium, NewOwnership, Origin};
+use crate::model::{Medium, NewOwnership, Origin, OwnershipEntry, TitleEntry};
 use crate::store::Store;
 use crate::title::normalize_title;
 
@@ -67,9 +67,67 @@ impl Catalog {
         })
     }
 
+    /// Lists every title once, with all of its copies.
+    ///
+    /// Titles are ordered by display name without regard to case, then by the
+    /// exact display name. Within a title, copies are ordered by source, then
+    /// medium, then origin, each compared by its text form.
+    pub fn list(&self) -> Result<Vec<TitleEntry>> {
+        let conn = self.store.conn();
+        let mut titles: Vec<(i64, TitleEntry)> = conn
+            .prepare("SELECT id, display_name FROM titles")?
+            .query_map([], |row| {
+                Ok((
+                    row.get(0)?,
+                    TitleEntry {
+                        title: row.get(1)?,
+                        ownerships: Vec::new(),
+                    },
+                ))
+            })?
+            .collect::<rusqlite::Result<_>>()?;
+        titles.sort_by(|(_, a), (_, b)| {
+            (a.title.to_lowercase(), &a.title).cmp(&(b.title.to_lowercase(), &b.title))
+        });
+
+        let mut copies = conn.prepare(
+            "SELECT source, medium, origin FROM ownerships
+             WHERE title_id = ?1
+             ORDER BY source, medium, origin",
+        )?;
+        for (title_id, entry) in &mut titles {
+            let rows = copies.query_map(params![*title_id], |row| {
+                Ok((
+                    row.get::<_, String>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, String>(2)?,
+                ))
+            })?;
+            for row in rows {
+                let (source, medium, origin) = row?;
+                entry.ownerships.push(OwnershipEntry {
+                    source,
+                    medium: medium.parse()?,
+                    origin: origin_from_text(&origin)?,
+                });
+            }
+        }
+        Ok(titles.into_iter().map(|(_, entry)| entry).collect())
+    }
+
     #[cfg(test)]
     pub(crate) fn store(&self) -> &Store {
         &self.store
+    }
+}
+
+fn origin_from_text(text: &str) -> Result<Origin> {
+    match text {
+        "store" => Ok(Origin::Store),
+        "manual" => Ok(Origin::Manual),
+        other => Err(Error::CorruptCatalog {
+            detail: format!("unknown ownership origin {other:?}"),
+        }),
     }
 }
 
@@ -189,6 +247,61 @@ mod tests {
     }
 
     type OwnershipRow = (String, String, String, String, String);
+
+    #[test]
+    fn list_returns_each_title_once_in_name_order() {
+        let mut catalog = Catalog::open_in_memory().unwrap();
+        catalog.record(&store_copy("app1", "portal")).unwrap();
+        catalog.record(&store_copy("app2", "Hades")).unwrap();
+        catalog.record(&store_copy("app3", "Doom")).unwrap();
+        catalog
+            .add_manual("HADES", "shelf", Medium::Physical)
+            .unwrap();
+
+        let listing = catalog.list().unwrap();
+
+        let names: Vec<&str> = listing.iter().map(|t| t.title.as_str()).collect();
+        assert_eq!(names, ["Doom", "Hades", "portal"]);
+        assert_eq!(listing[1].ownerships.len(), 2);
+    }
+
+    #[test]
+    fn list_orders_ownerships_within_title() {
+        let mut catalog = Catalog::open_in_memory().unwrap();
+        catalog.add_manual("Hades", "shelf", Medium::Rom).unwrap();
+        catalog.record(&store_copy("app1", "Hades")).unwrap();
+        catalog
+            .add_manual("Hades", "shelf", Medium::Physical)
+            .unwrap();
+
+        let listing = catalog.list().unwrap();
+
+        let copy = |source: &str, medium, origin| OwnershipEntry {
+            source: source.to_owned(),
+            medium,
+            origin,
+        };
+        assert_eq!(
+            listing,
+            [TitleEntry {
+                title: "Hades".to_owned(),
+                ownerships: vec![
+                    copy("epic", Medium::Digital, Origin::Store),
+                    copy("shelf", Medium::Physical, Origin::Manual),
+                    copy("shelf", Medium::Rom, Origin::Manual),
+                ],
+            }]
+        );
+        assert_eq!(
+            serde_json::to_string(&listing).unwrap(),
+            concat!(
+                r#"[{"title":"Hades","ownerships":["#,
+                r#"{"source":"epic","medium":"digital","origin":"store"},"#,
+                r#"{"source":"shelf","medium":"physical","origin":"manual"},"#,
+                r#"{"source":"shelf","medium":"rom","origin":"manual"}]}]"#
+            )
+        );
+    }
 
     #[test]
     fn manual_entry_records_label_medium_and_origin() {
