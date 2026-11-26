@@ -257,12 +257,16 @@ mod tests {
         catalog
             .add_manual("HADES", "shelf", Medium::Physical)
             .unwrap();
+        // A case-sensitive sort would put "Beta" before "alpha" (and both
+        // before "portal"); ignoring case must not.
+        catalog.record(&store_copy("app4", "Beta")).unwrap();
+        catalog.record(&store_copy("app5", "alpha")).unwrap();
 
         let listing = catalog.list().unwrap();
 
         let names: Vec<&str> = listing.iter().map(|t| t.title.as_str()).collect();
-        assert_eq!(names, ["Doom", "Hades", "portal"]);
-        assert_eq!(listing[1].ownerships.len(), 2);
+        assert_eq!(names, ["alpha", "Beta", "Doom", "Hades", "portal"]);
+        assert_eq!(listing[3].ownerships.len(), 2);
     }
 
     #[test]
@@ -362,6 +366,14 @@ mod tests {
                 row("Hades", "manual", "epic", "hades:digital", "digital"),
             ]
         );
+        // Same source and medium: the listing breaks the tie by origin, so the
+        // manual copy (inserted second) comes first.
+        let listed: Vec<Origin> = catalog.list().unwrap()[0]
+            .ownerships
+            .iter()
+            .map(|copy| copy.origin)
+            .collect();
+        assert_eq!(listed, [Origin::Manual, Origin::Store]);
     }
 
     fn store_copy(source_id: &str, title: &str) -> NewOwnership {

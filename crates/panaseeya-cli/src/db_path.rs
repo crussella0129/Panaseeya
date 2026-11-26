@@ -57,6 +57,13 @@ mod tests {
             .data_dir()
             .to_path_buf();
         assert_eq!(default.parent().unwrap(), expected_parent);
+        assert!(
+            expected_parent
+                .components()
+                .any(|part| part.as_os_str() == "Panaseeya"),
+            "{}",
+            expected_parent.display()
+        );
 
         assert_eq!(resolve_db_path(Some(flag), Some(dir)).unwrap(), flag);
         assert_eq!(

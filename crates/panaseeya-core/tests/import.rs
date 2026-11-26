@@ -45,19 +45,24 @@ fn import_document_records_epic_digital_store_ownerships() {
         .collect::<Result<_, _>>()
         .unwrap();
     stored.sort();
-    let mut expected: Vec<(String, String, String, String, String)> = base_games
-        .into_iter()
-        .map(|game| {
-            (
-                "epic".to_owned(),
-                game.app_name,
-                game.app_title,
-                "digital".to_owned(),
-                "store".to_owned(),
-            )
-        })
-        .collect();
-    expected.sort();
+    // Written out by hand rather than taken from the parser, so a DLC leaking
+    // through (Control's nested DLC, or the top-level soundtrack) would fail.
+    let expected: Vec<(String, String, String, String, String)> = [
+        ("fixture-app-control", "Control"),
+        ("fixture-app-hades", "Hades"),
+        ("fixture-app-witcher3", "The Witcher 3: Wild Hunt"),
+    ]
+    .into_iter()
+    .map(|(app_name, app_title)| {
+        (
+            "epic".to_owned(),
+            app_name.to_owned(),
+            app_title.to_owned(),
+            "digital".to_owned(),
+            "store".to_owned(),
+        )
+    })
+    .collect();
     assert_eq!(stored, expected);
 }
 

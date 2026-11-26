@@ -200,8 +200,14 @@ mod tests {
                 if found == current + 1 && supported == current
         ));
         let message = err.to_string();
-        assert!(message.contains(&(current + 1).to_string()), "{message}");
-        assert!(message.contains(&current.to_string()), "{message}");
+        assert!(
+            message.contains(&format!("schema version {}", current + 1)),
+            "{message}"
+        );
+        assert!(
+            message.contains(&format!("up to version {current}")),
+            "{message}"
+        );
         assert_eq!(std::fs::read(&path).unwrap(), before);
     }
 

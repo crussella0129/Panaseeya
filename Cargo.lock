@@ -364,6 +364,7 @@ dependencies = [
  "directories",
  "panaseeya-core",
  "predicates",
+ "rusqlite",
  "serde_json",
  "tempfile",
 ]

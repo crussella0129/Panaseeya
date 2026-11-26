@@ -294,6 +294,52 @@ fn cli_live_import_matches_file_import() {
     let from_live = list_json(&live_db);
     assert!(from_live.contains("Hades"));
     assert_eq!(from_live, list_json(&file_db));
+    // The listing hides identifiers, so compare the stored rows as well.
+    let live_rows = stored_ownerships(&live_db);
+    assert_eq!(live_rows.len(), 3);
+    assert_eq!(live_rows, stored_ownerships(&file_db));
+}
+
+/// Every stored ownership as (origin, source, source_id, medium, raw_title).
+fn stored_ownerships(db: &Path) -> Vec<[String; 5]> {
+    let conn = rusqlite::Connection::open(db).unwrap();
+    let mut statement = conn
+        .prepare(
+            "SELECT origin, source, source_id, medium, raw_title FROM ownerships
+             ORDER BY origin, source, source_id",
+        )
+        .unwrap();
+    statement
+        .query_map([], |row| {
+            Ok([
+                row.get(0)?,
+                row.get(1)?,
+                row.get(2)?,
+                row.get(3)?,
+                row.get(4)?,
+            ])
+        })
+        .unwrap()
+        .collect::<Result<_, _>>()
+        .unwrap()
+}
+
+#[test]
+fn cli_live_import_with_default_program_absent_names_legendary() {
+    // No override and an empty search path: the default `legendary` program
+    // cannot be found, which is the real "Legendary is not installed" case.
+    let empty_path = tempfile::tempdir().unwrap();
+
+    assert_fails_and_leaves_db_untouched(
+        |db| {
+            let mut command = with_db(db);
+            command
+                .env("PATH", empty_path.path())
+                .args(["import", "legendary"]);
+            command
+        },
+        "`legendary`",
+    );
 }
 
 #[test]
