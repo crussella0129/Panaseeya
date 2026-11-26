@@ -3,11 +3,11 @@
 <!-- sprint-loop-intent-v2 -->
 - **Intent ID:** INT-0001
 - **State:** active
-- **Work evidence:** [Sprint 0 build plan, T-001 to T-011](../sprints/s0/sprint-plans/build-plan.md)
-- **Completion evidence:** none
-- **Code evidence:** none
+- **Work evidence:** [Sprint 0 build plan, T-001 to T-011](../sprints/s0/sprint-plans/build-plan.md); [backlog T-012 and T-013](../work/tasks.md)
+- **Completion evidence:** [Sprint 0 completed tasks T-001 to T-011](../work/completed-tasks.md) — criteria 1, 2, 4–7 met locally; criteria 3 and 8 tested, not observed (T-012); host CI run not observed (T-013)
+- **Code evidence:** [panaseeya-core](../../crates/panaseeya-core/src/lib.rs), [panaseeya CLI](../../crates/panaseeya-cli/src/main.rs)
 - **Test evidence:** [Sprint 0 test report](../sprints/s0/sprint-tests/test-report.md) — criteria 1, 2, 4–7 pass locally on Windows; criteria 3 and 8 tested, not observed against real Legendary; CI not yet run
-- **Documentation evidence:** none
+- **Documentation evidence:** [README Status and Usage](../../README.md)
 
 ## Intent
 Panaseeya keeps one local catalog of every game a person owns, regardless of
@@ -122,6 +122,12 @@ read against that shape.
   or linked. Bundling them with a release is a later decision.
 - People must install and sign in to Legendary themselves until an in-app
   sign-in intent exists.
+- Automated tests must never run a real Legendary. On Windows a program
+  lookup can fall back to the parent process's search path even when the
+  child's is replaced, so the test that shows a missing default `legendary`
+  skips itself on a machine where `legendary` is installed. That machine's
+  pass count then includes a test that checked nothing; look for its
+  "skipped" message before relying on the count.
 
 ## Transition history
 - 2026-11-22: created as `proposed` during Sprint 0 research.
