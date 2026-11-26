@@ -6,7 +6,7 @@
 - **Work evidence:** [Sprint 0 build plan, T-001 to T-011](../sprints/s0/sprint-plans/build-plan.md)
 - **Completion evidence:** none
 - **Code evidence:** none
-- **Test evidence:** none
+- **Test evidence:** [Sprint 0 test report](../sprints/s0/sprint-tests/test-report.md) — criteria 1, 2, 4–7 pass locally on Windows; criteria 3 and 8 tested, not observed against real Legendary; CI not yet run
 - **Documentation evidence:** none
 
 ## Intent
