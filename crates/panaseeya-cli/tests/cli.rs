@@ -300,6 +300,24 @@ fn cli_live_import_matches_file_import() {
     assert_eq!(live_rows, stored_ownerships(&file_db));
 }
 
+/// Whether a program named `legendary` (with any usual Windows extension) is
+/// in a directory on this process's PATH.
+fn legendary_on_path() -> bool {
+    let Some(path) = std::env::var_os("PATH") else {
+        return false;
+    };
+    std::env::split_paths(&path).any(|dir| {
+        [
+            "legendary",
+            "legendary.exe",
+            "legendary.cmd",
+            "legendary.bat",
+        ]
+        .iter()
+        .any(|name| dir.join(name).is_file())
+    })
+}
+
 /// Every stored ownership as (origin, source, source_id, medium, raw_title).
 fn stored_ownerships(db: &Path) -> Vec<[String; 5]> {
     let conn = rusqlite::Connection::open(db).unwrap();
@@ -328,6 +346,14 @@ fn stored_ownerships(db: &Path) -> Vec<[String; 5]> {
 fn cli_live_import_with_default_program_absent_names_legendary() {
     // No override and an empty search path: the default `legendary` program
     // cannot be found, which is the real "Legendary is not installed" case.
+    //
+    // On Windows the program lookup can fall back to this process's own PATH,
+    // so on a machine where Legendary is installed the real tool would run
+    // against the owner's account. Skip rather than let that happen.
+    if legendary_on_path() {
+        eprintln!("skipped: `legendary` is on PATH, so it cannot be shown absent here");
+        return;
+    }
     let empty_path = tempfile::tempdir().unwrap();
 
     assert_fails_and_leaves_db_untouched(
