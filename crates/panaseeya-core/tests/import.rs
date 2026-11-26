@@ -15,7 +15,9 @@ fn epic_copy() -> OwnershipEntry {
 
 #[test]
 fn import_document_records_epic_digital_store_ownerships() {
-    let mut catalog = Catalog::open_in_memory().unwrap();
+    let dir = tempfile::tempdir().unwrap();
+    let path = dir.path().join("catalog.db");
+    let mut catalog = Catalog::open(&path).unwrap();
 
     let imported = import_legendary_document(&mut catalog, FIXTURE).unwrap();
 
@@ -26,22 +28,37 @@ fn import_document_records_epic_digital_store_ownerships() {
     for entry in &listing {
         assert_eq!(entry.ownerships, [epic_copy()], "{}", entry.title);
     }
+    drop(catalog);
 
-    // Importing again must be recognised by `app_name`: recording each base
-    // game by hand under its `app_name` adds nothing, which it would if the
-    // importer had stored any other identifier.
-    for game in base_games {
-        catalog
-            .record(&panaseeya_core::NewOwnership {
-                origin: Origin::Store,
-                source: "epic".to_owned(),
-                source_id: game.app_name,
-                medium: Medium::Digital,
-                title: game.app_title,
-            })
-            .unwrap();
-    }
-    assert_eq!(catalog.list().unwrap(), listing);
+    // Read the stored rows directly: each `source_id` must be the game's
+    // `app_name`, and each raw title its `app_title`.
+    let conn = rusqlite::Connection::open(&path).unwrap();
+    let mut stored: Vec<(String, String, String, String, String)> = conn
+        .prepare(
+            "SELECT source, source_id, raw_title, medium, origin FROM ownerships ORDER BY source_id",
+        )
+        .unwrap()
+        .query_map([], |row| {
+            Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?, row.get(4)?))
+        })
+        .unwrap()
+        .collect::<Result<_, _>>()
+        .unwrap();
+    stored.sort();
+    let mut expected: Vec<(String, String, String, String, String)> = base_games
+        .into_iter()
+        .map(|game| {
+            (
+                "epic".to_owned(),
+                game.app_name,
+                game.app_title,
+                "digital".to_owned(),
+                "store".to_owned(),
+            )
+        })
+        .collect();
+    expected.sort();
+    assert_eq!(stored, expected);
 }
 
 #[test]
