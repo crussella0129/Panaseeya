@@ -11,3 +11,4 @@
 - **Summary:** Headless Rust catalog core: versioned SQLite catalog, Epic import from Legendary output, manual entries, title grouping, and a CLI.
 - **Intents:** [INT-0001](../../intents/INT-0001-unified-catalog-core.md)
 - **Completion evidence:** T-001..T-011 built; 44 tests pass locally on Windows (test-report, critique proceed-with-caveats); INT-0001 criteria 1,2,4-7 met, 3 and 8 tested not observed (T-012), CI not yet run (T-013)
+- **Checkpoint:** https://github.com/crussella0129/Panaseeya/pull/1
